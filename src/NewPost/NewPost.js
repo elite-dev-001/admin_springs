@@ -26,7 +26,7 @@ function NewPost() {
     const onSubmit = (data) => {
         setLoading(true)
         secureUrl === '' ? data.thumbnail = altPic : data.thumbnail = secureUrl
-        secureUrl2 === '' ? data.thumbnail = null : data.thumbnail = secureUrl2
+        secureUrl2 === '' ? data.thumbnail2 = null : data.thumbnail2 = secureUrl2
         data.date = new Date().toLocaleDateString()
         data.posterImage = altPic;
         data.posterId = id;
@@ -53,7 +53,7 @@ function NewPost() {
         data.append('upload_preset', 't04ny6oh')
         axios.post('https://api.cloudinary.com/v1_1/dhejdjq9l/image/upload', data).then((res) => {
             console.log(res.data['secure_url'])
-            setSecureUrl2(res.data['secure_url'])
+            setSecureUrl(res.data['secure_url'])
             setDisabled(false)
             setLoading(false)
         }).catch((err) => {
@@ -71,7 +71,7 @@ function NewPost() {
         data.append('upload_preset', 't04ny6oh')
         axios.post('https://api.cloudinary.com/v1_1/dhejdjq9l/image/upload', data).then((res) => {
             console.log(res.data['secure_url'])
-            setSecureUrl(res.data['secure_url'])
+            setSecureUrl2(res.data['secure_url'])
             setDisabled(false)
             setLoading(false)
         }).catch((err) => {
