@@ -13,6 +13,7 @@ function NewPost() {
     const altPic = "https://res.cloudinary.com/dhejdjq9l/image/upload/v1656278153/Group_2_1_spt4rf.png"
     const { register, handleSubmit } = useForm();
     const [secureUrl, setSecureUrl] = useState('')
+    const [secureUrl2, setSecureUrl2] = useState('')
     const [disabled, setDisabled] = useState(false)
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -25,6 +26,7 @@ function NewPost() {
     const onSubmit = (data) => {
         setLoading(true)
         secureUrl === '' ? data.thumbnail = altPic : data.thumbnail = secureUrl
+        secureUrl2 === '' ? data.thumbnail = null : data.thumbnail = secureUrl2
         data.date = new Date().toLocaleDateString()
         data.posterImage = altPic;
         data.posterId = id;
@@ -44,6 +46,24 @@ function NewPost() {
 
 
     const uploadImage = (file) => {
+        setDisabled(true)
+        setLoading(true)
+        const data = new FormData();
+        data.append('file', file[0])
+        data.append('upload_preset', 't04ny6oh')
+        axios.post('https://api.cloudinary.com/v1_1/dhejdjq9l/image/upload', data).then((res) => {
+            console.log(res.data['secure_url'])
+            setSecureUrl2(res.data['secure_url'])
+            setDisabled(false)
+            setLoading(false)
+        }).catch((err) => {
+            console.log(err)
+            setLoading(false)
+            setDisabled(false)
+            setError('Somethin went wrong. Could not upload image')
+        })
+    }
+    const uploadImage2 = (file) => {
         setDisabled(true)
         setLoading(true)
         const data = new FormData();
@@ -98,6 +118,19 @@ function NewPost() {
                         <div className="form-group">
                             <label>Thumbnail</label>
                             <input onChange={(e) => uploadImage(e.target.files)} type="file" className="form-control" placeholder="" />
+                            <small className="form-text text-muted">Choose your profile in either JPEG, JPG or PNG format</small>
+                        </div> 
+                        <div className="form-group">
+                                <label>YouTube Link (Optional)</label>
+                                <input {...register('link')} type="text" className="form-control" placeholder="Enter Only YouTube Link" />
+                        </div>
+                        <div className="form-group">
+                                <label>Other Links (Optional)</label>
+                                <input {...register('videoLink')} type="text" className="form-control" placeholder="Enter Any Other Link" />
+                        </div>
+                        <div className="form-group">
+                            <label>Optional Image</label>
+                            <input onChange={(e) => uploadImage2(e.target.files)} type="file" className="form-control" placeholder="" />
                             <small className="form-text text-muted">Choose your profile in either JPEG, JPG or PNG format</small>
                         </div> 
                         <div className="form-group">
