@@ -8,7 +8,7 @@ function ColMd8() {
 //   const [col2, setCol2] = useState([]);
 
   useEffect(() => {
-    axios.get('https://africanspringsapi.herokuapp.com/api/post/get/all/news?category=general').then((res) => {
+    axios.get('https://vast-ruby-cheetah-cape.cyclic.app/api/post/get/all/news?category=general').then((res) => {
       console.log(res.data['results'])
       const general = Array.from(res.data['results']);
       // const general = results.filter((result) => result['category'].toLowerCase() === '')

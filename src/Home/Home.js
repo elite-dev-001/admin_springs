@@ -11,7 +11,7 @@ function Home() {
 
     useEffect(() => {
         window.localStorage.setItem('id', id)
-        axios.get(`https://africanspringsapi.herokuapp.com/api/post/get/all/news?posterId=${id}`).then((res) => {
+        axios.get(`https://vast-ruby-cheetah-cape.cyclic.app/api/post/get/all/news?posterId=${id}`).then((res) => {
         console.log(res.data['results'])
         const post = Array.from(res.data['results']);
         setMyPost(post)

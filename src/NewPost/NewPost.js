@@ -31,7 +31,7 @@ function NewPost() {
         data.posterImage = altPic;
         data.posterId = id;
         console.log(data)
-        axios.post('https://africanspringsapi.herokuapp.com/api/post/create/news', data).then((res) => {
+        axios.post('https://vast-ruby-cheetah-cape.cyclic.app/api/post/create/news', data).then((res) => {
             console.log(res.data)
             setLoading(false)
             window.alert('Post created successfully');

@@ -29,7 +29,7 @@ function Single() {
     const categories = ['Sports', 'Health', 'Lifestyle', 'Business', 'Healthy Living', 'Entertainment', 'Politics', 'Article', 'Travel', 'Food', 'News Update']
 
     useEffect(() => {
-        axios.get(`https://africanspringsapi.herokuapp.com/api/post/get/single/post/${postId}`).then((res) => {
+        axios.get(`https://vast-ruby-cheetah-cape.cyclic.app/api/post/get/single/post/${postId}`).then((res) => {
             console.log(res.data[0])
             reset(res.data[0])
             const data = res.data[0]
@@ -49,7 +49,7 @@ function Single() {
         data.posterImage = altPic;
         // data.posterId = id;
         console.log(data)
-        axios.patch(`https://africanspringsapi.herokuapp.com/api/post/update/news/${postId}`, data).then((res) => {
+        axios.patch(`https://vast-ruby-cheetah-cape.cyclic.app/api/post/update/news/${postId}`, data).then((res) => {
             console.log(res.data)
             setLoading(false)
             window.alert('Post updated successfully');
@@ -84,7 +84,7 @@ function Single() {
     const deletePost = () => {
         window.alert(' You are about to delete this Post')
         setLoading1(true)
-        axios.delete(`https://africanspringsapi.herokuapp.com/api/post/delete/single/post/${postId}`).then((res) => {
+        axios.delete(`https://vast-ruby-cheetah-cape.cyclic.app/api/post/delete/single/post/${postId}`).then((res) => {
             setLoading1(false)
             window.alert('Post Deleted successfully')
             navigate(`/${id}`)
