@@ -21,7 +21,7 @@ function NewPost() {
 
     const id = window.localStorage.getItem('id')
 
-    const categories = ['Sports', 'Health', 'Lifestyle', 'Business', 'Healthy Living', 'Entertainment', 'Politics', 'Article', 'Travel', 'Food', 'News Update']
+    const categories = ['Sports', 'Health', 'Lifestyle', 'Business', 'Healthy Living', 'Entertainment', 'Politics', 'Article', 'Travel', 'Food', 'News Update', "Education", "News", "Science", "Documentary", "Culture", "Motivation", "Newspaper headline", "Technology", "Trends", "World", "Cinema box office", "Markets", "Property", "Business leaders", "Medical research", "Music News", "Celebrity News", "Religion", "Global Economy", "Conflicts", "Cryptocurrency", "Vlog", "African tradition"]
 
     const onSubmit = (data) => {
         setLoading(true)
