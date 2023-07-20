@@ -3,31 +3,24 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Header from "../Header";
 
-function Home() {
+function ViewAdmin() {
   const { id } = useParams();
-  const [myPost, setMyPost] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [admins, setAdmin] = useState([]);
   console.log(id);
 
   useEffect(() => {
-    setLoading(true);
     window.localStorage.setItem("id", id);
     axios
-      .get(
-        `https://vast-ruby-cheetah-cape.cyclic.app/api/post/get/all/news?posterId=${id}`
-      )
+      .get(`https://vast-ruby-cheetah-cape.cyclic.app/api/admins/get/all`)
       .then((res) => {
-        setLoading(false);
         console.log(res.data["results"]);
-        const post = Array.from(res.data["results"]);
-        setMyPost(post);
+        const admins = Array.from(res.data["results"]);
+        setAdmin(admins);
       })
       .catch((err) => {
-        setLoading(false);
         console.log(err);
       });
   }, [id]);
-
   return (
     <>
       <Header />
@@ -47,29 +40,28 @@ function Home() {
                 </Link>
               </li>
               <li className="breadcrumbs__item breadcrumbs__item--current">
-                My Posts
+                Admins
               </li>
             </ul>
           </div>
         </div>
         <div className="col-md-8">
           <aside className="wrapper__list__article">
-            <h4 className="border_section">My News Upload</h4>
-            {loading ? (
-              <h1>Loading Posts...</h1>
-            ) : myPost.length === 0 ? (
-              <h2>No Current Uploads from you</h2>
+            <h4 className="border_section">View All Admins</h4>
+            {admins.length === 0 ? (
+              <h2>Loading...</h2>
             ) : (
-              myPost.map((post, index) => (
+              admins.map((admin, index) => (
                 <ArticleEntry
                   key={index}
-                  img={post["thumbnail"]}
-                  category={post["category"]}
-                  author={post["author"]}
-                  date={post["date"]}
-                  title={post["title"]}
-                  news={post["news"]}
-                  id={post["_id"]}
+                  img={admin["profile"]}
+                  suspend={admin["suspend"]}
+                  email={admin["email"]}
+                  country={admin["country"]}
+                  firstName={admin["firstName"]}
+                  lastName={admin["lastName"]}
+                  //   news={admin["news"]}
+                  id={admin["_id"]}
                 />
               ))
             )}
@@ -80,37 +72,38 @@ function Home() {
   );
 }
 
-export default Home;
+export default ViewAdmin;
 
 function ArticleEntry(props) {
-  const { img, category, author, date, title, news, id } = props;
+  const { img, suspend, email, country, firstName, lastName, id } = props;
+  const name = `${firstName} ${lastName}`;
   return (
     <div className="article__entry">
       <div className="article__image">
-        <Link to={`/single/${id} `}>
+        <Link to={`/single/admin/${id} `}>
           <img src={img} alt="" className="img-fluid" />
         </Link>
       </div>
       <div className="article__content">
-        <div className="article__category">{category}</div>
+        <div className="article__category">
+          {suspend ? "InActive" : "Active"}
+        </div>
         <ul className="list-inline">
           <li className="list-inline-item">
-            <span className="text-primary">{author}</span>
+            <span className="text-primary">{email}</span>
           </li>
           <li className="list-inline-item">
-            <span className="text-dark text-capitalize">{date}</span>
+            <span className="text-dark text-capitalize">{`Country: ${country}`}</span>
           </li>
         </ul>
-        <h5>
-          <Link to={`/single/${id} `}>{title}</Link>
-        </h5>
-        <p>{news.slice(0, 100)}</p>
+        <h5>{name}</h5>
+        {/* <p>{news.slice(0, 100)}</p> */}
         <Link
-          to={`/single/${id} `}
+          to={`/single/admin/${id} `}
           className="btn btn-outline-primary mb-4 text-capitalize"
         >
           {" "}
-          Update Post
+          View Admin
         </Link>
       </div>
     </div>
